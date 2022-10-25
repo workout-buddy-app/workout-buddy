@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Update your Profile{% endblock %}
+{% block body %}
+
+<h1 class="text-center">Welcome, {{ user.name }}!</h1>
+
+    <form method="post" class="text-center">
+
+      <div class="mb-3">
+        <label for="display_name" class="form-label">Display Name</label>
+        <input type="text" class="form-control" id="display_name" name="display_name" value="{{ user.name }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="about" class="form-label">About You</label>
+        <input type="text" class="form-control" id="about" name="about">
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" name="location">
+      </div>
+
+      <button type="submit" class="button small-button">Update</button>
+              {% with error_messages = get_flashed_messages(category_filter=['error']) %}
+                {% if error_messages %}
+          <p class="text-danger mt-3">{{ error_messages|join(' • ') }}</p>
+                {% endif %}
+              {% endwith %}
+              {% with info_messages = get_flashed_messages(category_filter=['info']) %}
+                {% if info_messages %}
+          <p class="text-success mt-3">{{ info_messages|join(' • ') }}</p>
+                {% endif %}
+              {% endwith %}
+    </form>
+
+        <div class="user-control">
+          <form action="/logout" method="post">
+              <button type="submit" class="button small-button ">Logout</button>
+          </form>
+      </div>
+
+{% endblock %}

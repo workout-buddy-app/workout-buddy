@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Your Profile{% endblock %}
+{% block body %}
+
+        <img class="profileimage" src="/">
+        <h3 class="text-center">{{ user.email }}</h3>
+        <h1 class="text-center">Welcome, {{ user.name }}!</h1>
+        <p>Bio: {{user.about}}</p>
+            <form action="/update" method="get">
+                 <button type="submit" class="button small-button"> Update Public Profile</button>
+            </form>
+            <form action="" method="get">
+                 <button type="submit" class="button small-button"> Update Email</button>
+            </form>
+        <div class="user-control">
+            <form action="/logout" method="post">
+                <button type="submit" class="button small-button ">Logout</button>
+            </form>
+        </div>
+
+{% endblock %}

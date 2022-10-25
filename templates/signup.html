@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block body %}
+    <form method="post" class="text-center">
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="For validation" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="date_birth" class="form-label">Date of Birth </label>
+        <input type="date" class="form-control" id="date_birth" name="date_birth" value="YYYYMMDD" required>
+      </div>
+
+      <button type="submit" class="btn btn-dark">Sign up</button>
+      {% with error_messages = get_flashed_messages(category_filter=['error']) %}
+        {% if error_messages %}
+          <p class="text-danger mt-3">{{ error_messages|join(' • ') }}</p>
+        {% endif %}
+      {% endwith %}
+      {% with info_messages = get_flashed_messages(category_filter=['info']) %}
+        {% if info_messages %}
+          <p class="text-success mt-3">{{ info_messages|join(' • ') }}</p>
+        {% endif %}
+      {% endwith %}
+      <p class="mt-3">Already have an account? <a href="/login" class="link-dark">Log in instead</a></p>
+    </form>
+{% endblock %}
