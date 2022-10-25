@@ -41,3 +41,8 @@ def quit_matching():
 
 def user_interface():
     pass
+
+
+def push_notification_to_accepted_match():
+    pass
+
