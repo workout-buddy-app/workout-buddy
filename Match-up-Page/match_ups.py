@@ -1,11 +1,11 @@
-from db_connection import get_db_connection
+from db_management import get_db_connection
 
 
 def get_info():
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
             cursor.execute("""SELECT *
-                            FROM user_profiles""")
+                            FROM user_data""")
             users = cursor.fetchall()
             return users
 
