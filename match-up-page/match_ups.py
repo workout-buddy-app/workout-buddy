@@ -22,7 +22,7 @@ def get_match():
 
 
 def accept_match():
-    # if choose this go to chat page
+    # if choose this go to chat page*******SEE TRELLO PAGE*******
     # what about consent from the other person? or would it just ping them
     # print a warning message before redirection
     pass
