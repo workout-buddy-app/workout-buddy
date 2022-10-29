@@ -1,5 +1,5 @@
 from db_management import get_db_connection
-
+import time
 
 # def get_info():
 #     with get_db_connection() as connection:
@@ -20,14 +20,12 @@ def get_match():
                                 FROM user_data AS ud
                                 ORDER BY rand() LIMIT 1""")
             result = cursor.fetchone()
+            print(result)
     return result
     # needs to select one profile, not the current user ??
     # cannot repeat matches in a session
     # should randomise XX
     # needs at least to get name/username, picture, and bio XX
-
-
-print(get_match())
 
 
 def accept_match():
@@ -49,9 +47,42 @@ def quit_matching():
 
 
 def user_interface():
-    pass
+    matches = 0
+    print("Start finding buddies!")  # on html??
+    while True:
+        get_match()
+        print()
+        print("Please select an option:")
+        print()
+        print("[1] ACCEPT MATCH")
+        print("[2] find someone else to connect with")
+        print("[3] quit and return to your dashboard")
+        action = input("Please select a button (for this select a number):  ")
+
+        if action == '1':
+            accept_match()
+            break
+
+        elif action == '2':
+            print()
+
+        elif action == '3':
+            print("redirecting, please wait....")
+            time.sleep(1)
+            quit_matching()
+            break
+
+        else:
+            print("Sorry, that wasn't one of the options. Please try again.")
+
+
+
+
 
 
 def push_notification_to_accepted_match():
     pass
+
+
+user_interface()
 
