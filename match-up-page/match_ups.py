@@ -29,10 +29,18 @@ def get_match():
 
 
 def accept_match():
+    time.sleep(1)
+    print("You are being redirected to your match's profile page")
+    print("following others shows your interest!")
+    time.sleep(1)
+    print("They will receive a notification that contains a link to your profile")
+    print("They will also receive your contact information")
+    time.sleep(1)
+    print("REMEMBER: be safe and kind! ^_^")
     # if choose this go to chat page*******SEE TRELLO PAGE*******
     # what about consent from the other person? or would it just ping them
     # print a warning message before redirection
-    pass
+
 
 
 def reject_match():
