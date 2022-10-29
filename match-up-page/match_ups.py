@@ -1,11 +1,12 @@
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from db_management import get_db_connection
-from app import view_own_profile, other_user_profile
+from app import view_own_profile, public_profile
 import time
 
 
 def get_match():
     # I think I need to add some sort of counter to each user, so they cannot be chosen in the same session?
+    # see db table matched_users
     # i also need to somehow set the current user id, prob from app.py??
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
@@ -21,7 +22,7 @@ def get_match():
             print(result)
     return result
     # needs to select one profile, not the current user ??
-    # cannot repeat matches in a session
+    # cannot repeat matches in a session/ever? after a period of time (may require trigger on new table)
 
 
 def accept_match():
@@ -34,7 +35,7 @@ def accept_match():
     push_notification_to_accepted_match()
     print("REMEMBER: be safe and kind! ^_^")
     time.sleep(3)
-    other_user_profile
+    public_profile
 
 
 def reject_match():

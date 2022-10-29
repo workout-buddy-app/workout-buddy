@@ -5,6 +5,8 @@ from config import SECRET_KEY
 
 from database.users import add_user, add_user_to_data_table, email_available, get_user_with_credentials, get_user_by_id, update_public_profile
 
+from user_management import get_user_details
+
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
 
@@ -133,12 +135,25 @@ def disc():
     return render_template('/disc.html')
 
 
-@app.get('/publicprofile')
-def other_user_profile():
+# ************Tried something will try to get help on this******************************
+# AttributeError: 'Request' object has no attribute 'get'
+# @app.get('/publicprofile/<int:user_id>')
+# @login_required
+# def other_user_profile(user_id):
+#     current_user_id = int(request.@should_be_signed_inget('user_id'))
+#     is_current_user = (user_id == current_user_id)
+#     user_details = get_user_details(user_id)
+#     return render_template('/publicprofile.html')
+# *********************************************************************************
+
+@app.get('/public-profile')
+@login_required
+def public_profile():
     return render_template('/publicprofile.html')
 
 
-@app.get('/findabuddy')
+@app.get('/find-a-buddy')
+@login_required
 def find_a_buddy():
     return render_template('/findabuddy.html')
 
