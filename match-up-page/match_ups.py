@@ -98,5 +98,6 @@ def push_notification_to_accepted_match():
     pass
 
 
-user_interface()
+if __name__ == '__main__':
+    user_interface()
 
