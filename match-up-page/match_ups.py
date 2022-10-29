@@ -9,19 +9,19 @@ def get_match():
     # i also need to somehow set the current user id, prob from app.py??
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
-            cursor.execute("""SELECT ud.display_name, ud.about, ud.location, ud.user_id 
+            cursor.execute("""SELECT ud.display_name, ud.about, ud.location
                                 FROM user_data AS ud
                                 ORDER BY rand() LIMIT 1""")
             result = cursor.fetchone()
             # user_id = ud.user_id
             # if user_id != current_user:
                 # print(result)
-            print(result)  # but I don't want this to show the user id????
+            # elif match has not occurred before
+            # print(result)
+            print(result)
     return result
     # needs to select one profile, not the current user ??
     # cannot repeat matches in a session
-    # should randomise XX
-    # needs at least to get name/username, picture, and bio XX
 
 
 def accept_match():
