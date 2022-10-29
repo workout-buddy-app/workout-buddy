@@ -141,7 +141,7 @@ def disc():
 # @app.get('/findabuddy')
 # def about():
 #     return render_template('/findabuddy.html')
-
+#
 
 if __name__ == '__main__':
     app.run()
