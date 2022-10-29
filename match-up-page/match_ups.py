@@ -1,24 +1,33 @@
 from db_management import get_db_connection
 
 
-def get_info():
-    with get_db_connection() as connection:
-        with connection.cursor(dictionary=True) as cursor:
-            cursor.execute("""SELECT *
-                            FROM user_data""")
-            users = cursor.fetchall()
-            return users
+# def get_info():
+#     with get_db_connection() as connection:
+#         with connection.cursor(dictionary=True) as cursor:
+#             cursor.execute("""SELECT *
+#                             FROM user_data""")
+#             users = cursor.fetchall()
+#             return users
 
 
-print(get_info())
+# print(get_info())
 
 
 def get_match():
-    # needs to select one profile, not the current user
+    with get_db_connection() as connection:
+        with connection.cursor(dictionary=True) as cursor:
+            cursor.execute("""SELECT ud.display_name, ud.about, ud.location 
+                                FROM user_data AS ud
+                                ORDER BY rand() LIMIT 1""")
+            result = cursor.fetchone()
+    return result
+    # needs to select one profile, not the current user ??
     # cannot repeat matches in a session
-    # should randomise
-    # needs at least to get name/username, picture, and bio
-    pass
+    # should randomise XX
+    # needs at least to get name/username, picture, and bio XX
+
+
+print(get_match())
 
 
 def accept_match():
