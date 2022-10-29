@@ -17,13 +17,17 @@ import time
 
 
 def get_match():
+    # I think I need to add some sort of counter to each user, so they cannot be chosen in the same session?
+    # i also need to somehow set the current user id, prob from app.py??
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
-            cursor.execute("""SELECT ud.display_name, ud.about, ud.location 
+            cursor.execute("""SELECT ud.display_name, ud.about, ud.location, user_id 
                                 FROM user_data AS ud
                                 ORDER BY rand() LIMIT 1""")
             result = cursor.fetchone()
-            print(result)
+            # if user_id != current_user:
+                # print(result)
+            print(result)  # but I don't want this to show the user id????
     return result
     # needs to select one profile, not the current user ??
     # cannot repeat matches in a session
@@ -32,27 +36,22 @@ def get_match():
 
 
 def accept_match():
+    # I want this function/ page only accessible by logged-in users
     time.sleep(1)
     print()
     print("You are being redirected to your match's profile page")
     print("following others shows your interest!")
     print()
     time.sleep(3)
-    print("They will receive a notification that contains a link to your profile")
-    print("They will also receive your contact information")
-    print()
-    time.sleep(3)
+    push_notification_to_accepted_match()
     print("REMEMBER: be safe and kind! ^_^")
     time.sleep(3)
-    # if choose this go to chat page*******SEE TRELLO PAGE*******
-    # what about consent from the other person? or would it just ping them
-    # print a warning message before redirection
+    # some sort of redirection to a page that doesn't exist?
 
 
 def reject_match():
     print("Please wait, we are finding your next buddy!")
     time.sleep(1)
-
 
 
 def quit_matching():
@@ -62,7 +61,6 @@ def quit_matching():
 
 
 def user_interface():
-    matches = 0
     print("Start finding buddies!")  # on html??
     while True:
         get_match()
@@ -91,11 +89,12 @@ def user_interface():
             print("Sorry, that wasn't one of the options. Please try again.")
 
 
-
-
-
-
 def push_notification_to_accepted_match():
+    print("They will receive a notification that contains a link to your profile")
+    print("They will also receive your contact information")
+    print()
+    time.sleep(3)
+    # how on earth do I send something to another user
     pass
 
 
