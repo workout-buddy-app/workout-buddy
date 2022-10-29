@@ -133,5 +133,15 @@ def disc():
     return render_template('/disc.html')
 
 
+# @app.get('/publicprofile')
+# def other_user_profile():
+#     return render_template('/publicprofile.html')
+#
+#
+# @app.get('/findabuddy')
+# def about():
+#     return render_template('/findabuddy.html')
+
+
 if __name__ == '__main__':
     app.run()
