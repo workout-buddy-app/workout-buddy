@@ -1,4 +1,7 @@
+from flask_login import login_required
+
 from db_management import get_db_connection
+from app import view_own_profile
 import time
 
 # def get_info():
@@ -30,28 +33,32 @@ def get_match():
 
 def accept_match():
     time.sleep(1)
+    print()
     print("You are being redirected to your match's profile page")
     print("following others shows your interest!")
-    time.sleep(1)
+    print()
+    time.sleep(3)
     print("They will receive a notification that contains a link to your profile")
     print("They will also receive your contact information")
-    time.sleep(1)
+    print()
+    time.sleep(3)
     print("REMEMBER: be safe and kind! ^_^")
+    time.sleep(3)
     # if choose this go to chat page*******SEE TRELLO PAGE*******
     # what about consent from the other person? or would it just ping them
     # print a warning message before redirection
 
 
-
 def reject_match():
-    # if choose this, cycle back into get_match
-    pass
+    print("Please wait, we are finding your next buddy!")
+    time.sleep(1)
+
 
 
 def quit_matching():
-    # may not  need this as is webpage????
-    # returns user to dashboard page or homepage
-    pass
+    print("redirecting, please wait")
+    time.sleep(1)
+    view_own_profile
 
 
 def user_interface():
