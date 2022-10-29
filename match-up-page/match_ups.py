@@ -3,17 +3,6 @@ from db_management import get_db_connection
 from app import view_own_profile
 import time
 
-# def get_info():
-#     with get_db_connection() as connection:
-#         with connection.cursor(dictionary=True) as cursor:
-#             cursor.execute("""SELECT *
-#                             FROM user_data""")
-#             users = cursor.fetchall()
-#             return users
-
-
-# print(get_info())
-
 
 def get_match():
     # I think I need to add some sort of counter to each user, so they cannot be chosen in the same session?
