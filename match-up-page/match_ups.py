@@ -1,6 +1,6 @@
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from db_management import get_db_connection
-from app import view_own_profile
+from app import view_own_profile, other_user_profile
 import time
 
 
@@ -34,7 +34,7 @@ def accept_match():
     push_notification_to_accepted_match()
     print("REMEMBER: be safe and kind! ^_^")
     time.sleep(3)
-    # some sort of redirection to a page that doesn't exist?
+    other_user_profile
 
 
 def reject_match():
