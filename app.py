@@ -5,6 +5,8 @@ from config import SECRET_KEY
 
 from database.users import add_user, email_available, get_user_with_credentials, get_user_by_id, update_public_profile
 
+from utils.validation import is_over_eighteen
+
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
@@ -75,6 +77,8 @@ def submit_signup():
         flash("Passwords should be at least 8 characters long.", 'error')
     elif not email_available(email):
         flash("An account with that email already exists.", 'error')
+    elif not is_over_eighteen(date_birth):
+        flash("Users must be 18 or over", 'error')
     else:
         add_user(name, email, password, date_birth)
         flash("New account created.", 'info')
