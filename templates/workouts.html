@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
 {% block body %}
-               <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="button small-button" type="submit">Search</button>
-              </form>
+  <div class="card mx-auto bg-light text-center shadow" style="max-width: 600px;">
+    <div class="card-body">
+      <h1 class="mb-4">Find a workout</h1>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-primary rounded-pill" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
 {% endblock %}

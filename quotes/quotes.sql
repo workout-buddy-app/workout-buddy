@@ -1,9 +1,8 @@
 CREATE DATABASE IF NOT EXISTS motivational_quotes;
-
 USE motivational_quotes;
 
 CREATE TABLE inspirational_quotes(
-				quotes VARCHAR(255) NOT NULL
+	quotes VARCHAR(255) NOT NULL
 );
 
 INSERT INTO inspirational_quotes
@@ -61,5 +60,3 @@ VALUES
 ('There are seven days in a week. Someday is not one of them.'),
 ('It doesn’t get easier. You get stronger.')
 ;
-
-SELECT * FROM inspirational_quotes;

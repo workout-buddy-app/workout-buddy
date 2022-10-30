@@ -37,7 +37,7 @@ def user_loader(user_id):
 def view_login():
     if not current_user.is_anonymous:
         return redirect('/profile')
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 
 @app.post('/login')
@@ -60,7 +60,7 @@ def submit_login():
 def view_signup():
     if not current_user.is_anonymous:
         return redirect('/profile')
-    return render_template("signup.html")
+    return render_template("signup.html", user=current_user)
 
 
 @app.post('/signup')
@@ -116,22 +116,22 @@ def update_profile():
 #view pages:
 @app.get('/')
 def view_home():
-    return render_template("home.html")
+    return render_template("home.html", user=current_user)
 
 
 @app.get('/workouts')
 def workout():
-    return render_template('workouts.html')
+    return render_template('workouts.html', user=current_user)
 
 
 @app.get('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', user=current_user)
 
 
-@app.get('/disc')
-def disc():
-    return render_template('disc.html')
+@app.get('/disclaimer')
+def disclaimer():
+    return render_template('disclaimer.html', user=current_user)
 
 
 # ************Tried something will try to get help on this******************************
@@ -147,12 +147,12 @@ def disc():
 
 @app.get('/publicprofile')
 def public_profile():
-    return render_template('publicprofile.html')
+    return render_template('publicprofile.html', user=current_user)
 
 
-@app.get('/findabuddy')
+@app.get('/buddies')
 def find_a_buddy():
-    return render_template('findabuddy.html')
+    return render_template('buddies.html', user=current_user)
 
 
 if __name__ == '__main__':
