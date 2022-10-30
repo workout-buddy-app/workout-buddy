@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block body %}
- <div class="container main">
-                <h1>Need a fitness buddy?</h1>
-                <h1>Sign up.</h1>
-                <h3>The place to meet your perfect workout partner</h3>
-     <a href="/signup"><button type="button" class="button large-button">Join today</button></a></div>
+  <div class="row h-100 pt-lg-5 flex-row-reverse">
+    <div class="col-lg d-flex flex-column justify-content-center align-items-center text-center">
+      <h1 class="pt-lg-5">Need a fitness buddy?</h1>
+      <h2 class="pb-lg-5 pb-3">Sign up.</h2>
+      <p class="lead py-lg-5 py-3">The place to meet your perfect workout partner</p>
+      <a role="button" href="/signup" class="btn btn-lg btn-primary text-light rounded-pill my-lg-5 my-3">Join today</a>
+    </div>
+    <div class="col-lg d-flex flex-column justify-content-center align-items-center">
+      <img src="/static/sporty-ladies.png" class="mx-auto my-5 my-lg-0" style="width: 400px; max-width: 80%;">
+    </div>
+  </div>
 {% endblock %}

@@ -1,84 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
-    <title>{% block title %}{% endblock %}</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/bootstrap.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <title>{% block title %}{% endblock %}</title>
 </head>
-
-<body>
-    <div id="container">
-        <div id ="headerbox">
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid col">
-                  <div id="brand">
-                    <div id="circle"> </div>
-                  <a class="brand" href="/">Workout Buddy</a>
-                </div>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-
-                  <div class="col collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
-                      <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/workouts">Workouts</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Smart Smoothies</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/">View Profiles</a>
-                      </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="/">Find a Buddy</a>
-                      </li>
-                        <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/profile">My Profile</a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                      </li>
-                    </ul>
-
-                  </div>
-                </div>
-              </nav>
-                <div id="quotesbar">
-                        "So inspire. Much motivation."
-                    </div>
-        </div>
-<main>
-        <div id="maincontent">
-            <div id="leftmain">
-                <img class="largeimage" src="static/smiling-strong-woman-together.jpg">
-                <img class="smallimage" src="static/greg-rosenke-OqP4uMDQ1e0-unsplash.jpg">
-                <img class="smallimage" src="static/women-who-plank-together.jpg">
-            </div>
-            <div id="rightmain">
-
-                <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
-             {% block body %}{% endblock %}
-                </div>
-            </div>
-        </div>
-</main>
-        <footer><a href="/disc">Disclaimer</a> | c Workout Buddy 2022 | </footer>
+<body class="bg-light text-dark h-100">
+  <nav class="navbar navbar-expand-lg fixed-top flex-column align-items-stretch p-5 pb-0 bg-light">
+    <div class="container-fluid px-0">
+      <a class="navbar-brand fw-bold ps-2" href="/" style="position: relative;">Workout Buddy <span class="d-inline-block bg-info rounded-pill" style="position: absolute; left: 0; top: -5px; z-index: -1; width: 50px; height: 50px;"></span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav justify-content-between text-center" style="flex-basis: 100%;">
+          <li class="nav-item"><a class="nav-link link-dark" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link link-dark" href="/about">About</a></li>
+          <li class="nav-item"><a class="nav-link link-dark" href="/workouts">Workouts</a></li>
+          <li class="nav-item"><a class="nav-link link-dark" href="/smoothies">Smart smoothies</a></li>
+          <li class="nav-item"><a class="nav-link link-dark" href="/buddies">Find a buddy</a></li>
+          {% if user.is_anonymous %}
+            <li class="nav-item"><a class="nav-link link-dark" href="/login">Login</a></li>
+            <li class="nav-item"><a class="nav-link link-dark" href="/signup">Sign up</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link link-dark" href="/profile">Profile</a></li>
+            <li class="nav-item"><a class="nav-link link-dark" href="/logout">Logout</a></li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
-
-
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <div>
+      <hr class="border-dark mb-0">
+      <p class="text-center my-2">Fitness tip #1: work out with a friend!</p>
+      <hr class="border-dark mt-0">
+    </div>
+  </nav>
+  <main class="h-100 pb-5" style="padding-top: 12rem;">
+    <div class="container-fluid">
+      {% block body %}{% endblock %}
+    </div>
+  </main>
+  <footer class="fixed-bottom bg-light border-top border-dark py-2 text-center">
+    <a href="/disclaimer" class="link-success">Disclaimer</a>&ensp;|&ensp;&copy; Workout Buddy 2022
+  </footer>
+  <svg viewBox="-0.4 -0.4 231.3 210.5" style="position: fixed; right: calc(25vw - 500px); bottom: 0; height: calc(500px + 60vh); z-index: -1;">
+    <path
+      d="m 202.80962,98.88779 c -3.2192,3.90139 -7.553,6.81221 -12.2591,8.66607 -4.7061,1.85387 -9.7784,2.67864 -14.8353,2.78892 -10.1138,0.22055 -20.0496,-2.35456 -29.9028,-4.6464 -9.8531,-2.29184 -19.9964,-4.32806 -30.0273,-3.01779 -5.0155,0.65514 -9.95481,2.16423 -14.29991,4.75342 -4.345202,2.5892 -8.078702,6.28923 -10.386202,10.79031 -2.8627,5.58406 -3.4159,12.12699 -2.6538,18.35563 0.7622,6.22865 2.7647,12.22997 4.802,18.16515 2.3888,6.95921 4.8763,14.14793 4.2966,21.48282 -0.4356,5.51189 -2.5909,10.74632 -5.1496,15.64774 -2.5586,4.90142 -5.5476,9.58048 -7.8493,14.6077 -2.3017,5.02722 -3.9143,10.51978 -3.4924,16.03273 -0.12849,37.54776 23.107492,46.06729 98.334312,46.34862 133.00853,-0.0372 132.75138,-0.3578 132.0918,-95.96261 0.71415,-113.626817 -44.84015,-114.685559 -66.46186,-114.464464 -18.11496,0.04962 -26.1898,11.27014 -30.83815,19.872131 -2.06303,3.817725 -6.44879,14.617193 -11.36899,20.580023 z"
+      style="fill:#61b4b3" />
+  </svg>
+  <svg viewBox="-0.4 -0.4 231.3 210.5" style="position: fixed; left: 0; bottom: 0; height: calc(500px + 60vh); z-index: -1;">
+    <path
+      d="m -158.33054,264.19769 c 0.034,39.08411 40.7903,46.81264 98.334307,46.34862 89.3205,0.0956 133.2536,-41.30091 132.0918,-95.96261 0.4116,-2.78978 0.1009,-5.66592 -0.7531,-8.35347 -1.7081,-5.3751 -5.5054,-9.87671 -9.8595,-13.46163 -4.354,-3.58492 -9.2949,-6.37151 -14.0736,-9.36696 -4.7787,-2.99546 -9.4803,-6.27211 -13.0895,-10.60604 -5.1251,-6.15425 -7.708,-14.03432 -9.3038,-21.88257 -1.5958,-7.84825 -2.3202,-15.87115 -4.3047,-23.63021 -1.9846,-7.75907 -6.0886,-14.74391 -11.3804996,-20.75539 -2.4599,-2.7944 -6.7787,-5.80535 -10.8327,-6.04003 C -132.67394,92.8942 -158.08334,202.77008 -158.33054,264.19769 Z"
+      style="fill:#396362" />
+  </svg>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
