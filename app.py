@@ -121,17 +121,17 @@ def view_home():
 
 @app.get('/workouts')
 def workout():
-    return render_template('/workouts.html')
+    return render_template('workouts.html')
 
 
 @app.get('/about')
 def about():
-    return render_template('/about.html')
+    return render_template('about.html')
 
 
 @app.get('/disc')
 def disc():
-    return render_template('/disc.html')
+    return render_template('disc.html')
 
 
 # ************Tried something will try to get help on this******************************
@@ -142,17 +142,17 @@ def disc():
 #     current_user_id = int(request.@should_be_signed_inget('user_id'))
 #     is_current_user = (user_id == current_user_id)
 #     user_details = get_user_by_id(user_id)
-#     return render_template('/publicprofile.html')
+#     return render_template('publicprofile.html')
 # *********************************************************************************
 
 @app.get('/publicprofile')
 def public_profile():
-    return render_template('/publicprofile.html')
+    return render_template('publicprofile.html')
 
 
 @app.get('/findabuddy')
 def find_a_buddy():
-    return render_template('/findabuddy.html')
+    return render_template('findabuddy.html')
 
 
 if __name__ == '__main__':

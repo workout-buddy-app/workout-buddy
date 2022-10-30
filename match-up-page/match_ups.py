@@ -1,28 +1,21 @@
-from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
-from db_management import get_db_connection
+from database.connection import get_db_connection
 from app import view_own_profile, public_profile
 import time
 
 
-def get_match():
-    # While loop that iterates through the matched pairs table, if the pair exists, we can't pull it
-    # separate function?
-    # also need to somehow set the current user id, prob from app.py??
+def get_match(current_user_id):
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
-            cursor.execute("""SELECT ud.display_name, ud.about, ud.location
+            cursor.execute("""SELECT ud.user_id, ud.display_name, ud.about, ud.location
                                 FROM user_data AS ud
-                                ORDER BY rand() LIMIT 1""")
+                                WHERE ud.user_id NOT IN (SELECT mu.matched_user_id 
+                                                            FROM matched_users AS mu 
+                                                            WHERE mu.current_user_id = %s)
+                                ORDER BY rand() LIMIT 1""", [current_user_id])
             result = cursor.fetchone()
-            # user_id = ud.user_id
-            # if user_id != current_user:
-                # print(result)
-            # elif match has not occurred before
-            # print(result)
             print(result)
     return result
-    # needs to select one profile, not the current user ??
-    # cannot repeat matches in a session/ever? after a period of time (may require trigger on new table)
+
 
 
 def accept_match():
@@ -50,10 +43,9 @@ def quit_matching():
 
 
 def user_interface():
-    # I want this function/ page only accessible by logged-in users
-    print("Start finding buddies!")  # on html??
+    print("Start finding buddies!")
     while True:
-        get_match()
+        get_match(1)
         print()
         print("Please select an option:")
         print()
