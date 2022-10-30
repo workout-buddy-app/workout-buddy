@@ -146,14 +146,12 @@ def disc():
 #     return render_template('/publicprofile.html')
 # *********************************************************************************
 
-@app.get('/public-profile')
-@login_required
+@app.get('/publicprofile')
 def public_profile():
     return render_template('/publicprofile.html')
 
 
-@app.get('/find-a-buddy')
-@login_required
+@app.get('/findabuddy')
 def find_a_buddy():
     return render_template('/findabuddy.html')
 
