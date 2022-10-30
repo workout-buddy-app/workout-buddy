@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Find a Buddy!{% endblock %}
+{% block body %}
+  <div class="card mx-auto bg-light text-center shadow" style="max-width: 400px;">
+    <div class="card-body">
+      <h1 class="mb-4">Find a Buddy!</h1>
+      <h2 class="text-center">[match name]</h2>
+      <p>[match bio information/little blurb thing]</p>
+      <img class="profileimage" src="/">
+      <form action="" method="get">
+          <button type="submit" class="button small-button">Accept Buddy</button>
+      </form>
+      <form action="" method="get">
+          <button type="submit" class="button small-button">Reject Match</button>
+      </form>
+      <form action="" method="get">
+          <button type="submit" class="button small-button">Finished Matching</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
