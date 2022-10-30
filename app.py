@@ -3,7 +3,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, curren
 
 from config import SECRET_KEY
 
-from database.users import add_user, add_user_to_data_table, email_available, get_user_with_credentials, get_user_by_id, update_public_profile
+from database.users import add_user, email_available, get_user_with_credentials, get_user_by_id, update_public_profile
 
 from user_management import get_user_details
 
