@@ -5,9 +5,9 @@ import time
 
 
 def get_match():
-    # I think I need to add some sort of counter to each user, so they cannot be chosen in the same session?
-    # see db table matched_users
-    # i also need to somehow set the current user id, prob from app.py??
+    # While loop that iterates through the matched pairs table, if the pair exists, we can't pull it
+    # separate function?
+    # also need to somehow set the current user id, prob from app.py??
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
             cursor.execute("""SELECT ud.display_name, ud.about, ud.location
@@ -44,7 +44,7 @@ def reject_match():
 
 
 def quit_matching():
-    print("redirecting, please wait")
+    print("redirecting, please wait...")
     time.sleep(1)
     view_own_profile
 
@@ -70,8 +70,6 @@ def user_interface():
             print()
 
         elif action == '3':
-            print("redirecting, please wait....")
-            time.sleep(1)
             quit_matching()
             break
 
