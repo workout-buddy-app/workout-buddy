@@ -5,7 +5,6 @@ from config import SECRET_KEY
 
 from database.users import add_user, email_available, get_user_with_credentials, get_user_by_id, update_public_profile
 
-from user_management import get_user_details
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
@@ -142,7 +141,7 @@ def disc():
 # def other_user_profile(user_id):
 #     current_user_id = int(request.@should_be_signed_inget('user_id'))
 #     is_current_user = (user_id == current_user_id)
-#     user_details = get_user_details(user_id)
+#     user_details = get_user_by_id(user_id)
 #     return render_template('/publicprofile.html')
 # *********************************************************************************
 
