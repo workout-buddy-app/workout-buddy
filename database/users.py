@@ -19,18 +19,6 @@ def add_user(name, email, password, date_birth):
             connection.commit()
 
 
-def add_user_to_data_table(user_id):
-    with get_db_connection() as connection:
-        with connection.cursor(dictionary=True) as cursor:
-            cursor.execute("""INSERT INTO user_data
-                            (user_id, name, display_name)
-                            SELECT 
-                                u.user_id, u.name, u.name 
-                                FROM user_login AS u
-                            WHERE u.user_id = %s""", [user_id])
-            connection.commit()
-
-
 def email_available(email):
     """
     Checks whether an email is available or whether it is already present in the database.
