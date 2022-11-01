@@ -17,13 +17,15 @@ def get_match(current_user_id):
     return result
 
 
-def accept_match(current_user_id):
-    with get_db_connection() as connection:
-        with connection.cursor(dictionary=True) as cursor:
-            cursor.execute("""INSERT INTO matched_users
-                            (current_user_id, matched_user_id)
-                            VALUES 
-                            (%, %)"""
+# current_user_id, matched_user_id into params?
+def accept_match():
+    # with get_db_connection() as connection:
+    #     with connection.cursor(dictionary=True) as cursor:
+    #         cursor.execute("""INSERT INTO matched_users
+    #                         (current_user_id, matched_user_id)
+    #                         VALUES
+    #                         (%, %)"""[current_user_id, matched_user_id]
+    #                        )
     time.sleep(1)
     print()
     print("You are being redirected to your match's profile page")
@@ -60,7 +62,7 @@ def user_interface():
         action = input("Please select a button (for this select a number):  ")
 
         if action == '1':
-            accept_match()
+            accept_match(1)
             break
 
         elif action == '2':
