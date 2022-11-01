@@ -40,6 +40,3 @@ class SmoothieManager:
         smoothie_search_data = smoothie_ingredient_response.json()
         return smoothie_search_data
 
-
-smooth = SmoothieManager()
-print(smooth.smoothie_search('peach'))
