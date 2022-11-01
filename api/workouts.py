@@ -21,8 +21,8 @@ class WorkoutManager:
         workout_data_random = random.sample(self.workout_data, k=7)
         workouts_to_return = []
         for workout in workout_data_random:
-            workout_category_data = WorkoutManager.get_workout_category_data(workout['category'])
-            workouts_to_return.append({'name': workout['name'], 'category': workout_category_data['name']})
+            workout_category_data = self.get_workout_category_data(workout['category'])
+            workouts_to_return.append({'name': workout['name'], 'category': workout_category_data['name'], 'description': workout['description']})
         return workouts_to_return
 
     def get_workout_data(self):
@@ -38,3 +38,7 @@ class WorkoutManager:
                                                  params=self.english_parameters)
         workout_category_data = workout_category_response.json()
         return workout_category_data
+
+
+workout_manager = WorkoutManager()
+print(workout_manager.generate_random_workouts())
