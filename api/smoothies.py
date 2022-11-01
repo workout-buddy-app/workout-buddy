@@ -24,6 +24,8 @@ class SmoothieManager:
         return smoothie_data['hits']
 
     def smoothie_search(self, ingredient):
+        """This takes an ingredient as user input and searches the API
+            then it will return results"""
         ingredient = input('Enter an ingredient to search ')
         search_results = self.smoothie_data
         for item in search_results:
