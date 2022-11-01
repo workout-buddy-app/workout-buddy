@@ -3,6 +3,7 @@ from app import view_own_profile, public_profile
 import time
 
 
+# need to get this checked
 def get_match(current_user_id):
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
@@ -10,15 +11,23 @@ def get_match(current_user_id):
                                 FROM user_data AS ud
                                 WHERE ud.user_id NOT IN (SELECT mu.matched_user_id 
                                                             FROM matched_users AS mu 
-                                                            WHERE mu.current_user_id = %s)
+                                                            WHERE mu.current_user_id = %s 
+                                                            AND mu.current_user_id != mu.matched_user_id)
                                 ORDER BY rand() LIMIT 1""", [current_user_id])
             result = cursor.fetchone()
             print(result)
     return result
 
 
-
+# current_user_id, matched_user_id into params?
 def accept_match():
+    # with get_db_connection() as connection:
+    #     with connection.cursor(dictionary=True) as cursor:
+    #         cursor.execute("""INSERT INTO matched_users
+    #                         (current_user_id, matched_user_id)
+    #                         VALUES
+    #                         (%, %)"""[current_user_id, matched_user_id]
+    #                        )
     time.sleep(1)
     print()
     print("You are being redirected to your match's profile page")
@@ -45,7 +54,7 @@ def quit_matching():
 def user_interface():
     print("Start finding buddies!")
     while True:
-        get_match(1)
+        get_match(2)
         print()
         print("Please select an option:")
         print()
