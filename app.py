@@ -117,15 +117,29 @@ def update_profile():
     return redirect('/profile')
 
 
-#view pages:
 @app.get('/')
 def view_home():
     return render_template("home.html", user=current_user)
 
 
 @app.get('/workouts')
-def workout():
+def view_workout():
     return render_template('workouts.html', user=current_user)
+
+
+@app.post('/workouts')
+def search_workout():
+    pass
+
+
+@app.get('/smoothies')
+def view_smoothies():
+    return render_template('smoothies.html', user=current_user)
+
+
+@app.post('/smoothies')
+def search_smoothies():
+    pass
 
 
 @app.get('/about')
