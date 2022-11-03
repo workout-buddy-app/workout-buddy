@@ -11,16 +11,17 @@ def get_match(current_user_id):
                                 FROM user_data AS ud
                                 WHERE ud.user_id NOT IN (SELECT mu.matched_user_id 
                                                             FROM matched_users AS mu 
-                                                            WHERE mu.current_user_id = %s 
-                                                            AND mu.current_user_id != mu.matched_user_id)
+                                                            WHERE mu.current_user_id = %s)
                                 ORDER BY rand() LIMIT 1""", [current_user_id])
             result = cursor.fetchone()
             print(result)
     return result
 
 
-# current_user_id, matched_user_id into params?
 def accept_match():
+    """Should connect to database and insert the matched pair
+    :param current_user_id, matched_user_id
+    use the code below possibly"""
     # with get_db_connection() as connection:
     #     with connection.cursor(dictionary=True) as cursor:
     #         cursor.execute("""INSERT INTO matched_users
@@ -37,7 +38,7 @@ def accept_match():
     push_notification_to_accepted_match()
     print("REMEMBER: be safe and kind! ^_^")
     time.sleep(3)
-    public_profile
+    public_profile  # this is to show what the front end should do
 
 
 def reject_match():
@@ -48,7 +49,7 @@ def reject_match():
 def quit_matching():
     print("redirecting, please wait...")
     time.sleep(1)
-    view_own_profile
+    view_own_profile  # this is to show what the front end should do
 
 
 def user_interface():
@@ -75,7 +76,8 @@ def user_interface():
             break
 
         else:
-            print("Sorry, that wasn't one of the options. Please try again.")
+            print("Sorry, that wasn't one of the options. Please refresh and try again.")
+            break
 
 
 def push_notification_to_accepted_match():
