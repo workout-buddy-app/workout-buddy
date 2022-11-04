@@ -61,18 +61,30 @@ def get_user_by_id(user_id):
                                WHERE u.user_id = %s""", [user_id])
 
             matching_user = cursor.fetchone()
-            if matching_user is not None:
-                return matching_user
+            return matching_user
 
 
-#if the field is left blank, then it currently erases the old data
-def update_public_profile(display_name, about, location, user_id):
+def get_public_profile_data(user_id):
+    """
+    Retrieves the public profile data for the user with the given id, if present.
+    If there is no matching user, returns None.
+    """
+    with get_db_connection() as connection:
+        with connection.cursor(dictionary=True) as cursor:
+            cursor.execute("""SELECT u.user_id, u.display_name, u.about, u.location
+                                FROM user_data AS u
+                               WHERE u.user_id = %s""", [user_id])
+
+            matching_user = cursor.fetchone()
+            return matching_user
+
+
+def update_public_profile(user_id, display_name, about, location):
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
             cursor.execute("""UPDATE user_data
-                                SET 
-                                display_name = %s, 
-                                about = %s,
-                                location  = %s
-                                WHERE user_id = %s""", [display_name, about, location, user_id])
+                                 SET display_name = %s, 
+                                     about = %s,
+                                     location = %s
+                               WHERE user_id = %s""", [display_name, about, location, user_id])
             connection.commit()

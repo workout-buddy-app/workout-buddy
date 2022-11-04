@@ -39,6 +39,3 @@ class WorkoutManager:
         workout_category_data = workout_category_response.json()
         return workout_category_data
 
-
-workout_manager = WorkoutManager()
-print(workout_manager.generate_random_workouts())
