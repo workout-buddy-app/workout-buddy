@@ -6,16 +6,23 @@
       <h1 class="mb-4">Find a smoothie</h1>
       <p>Want a quick, healthy boost? Can't be bothered to cook? Have a quick search for a delicious smoothie!</p>
       <form class="d-flex" role="search" method="get">
-        <input class="form-control me-2 rounded-pill" type="text" id="ingredient" name="ingredient" placeholder="Search" aria-label="Ingredient">
+        <input class="form-control me-2 rounded-pill" type="text" id="ingredient" name="ingredient" placeholder="Search" value="{{ ingredient }}" aria-label="Ingredient">
         <button class="btn btn-primary rounded-pill text-white" type="submit">Search</button>
       </form>
       <div>
-        {% if smoothies %}
+        {% if smoothies is not none %}
           {% for smoothie in smoothies %}
-            <p>
-              {{ smoothies.label }}<br>
-            </p>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h5 class="card-title">{{ smoothie.name }}</h5>
+                <h6 class="card-subtitle">{{ smoothie.diet_labels }}</h6>
+                <p class="card-text mt-3">View the full recipe on <a href="{{ smoothie.url }}" target="_blank">{{ smoothie.source }}</a></p>
+              </div>
+            </div>
           {% endfor %}
+          {% if smoothies|length == 0 %}
+            <p class="lead mt-3">No recipes found with that ingredient!</p>
+          {% endif %}
         {% endif %}
       </div>
     </div>
