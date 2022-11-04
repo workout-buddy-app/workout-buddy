@@ -1,11 +1,9 @@
 from flask import Flask, flash, request, render_template, redirect
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
-
 from config import SECRET_KEY
-
 from database.users import add_user, email_available, get_user_with_credentials, get_user_by_id, update_public_profile
-
 from utils.validation import is_over_eighteen
+from api.smoothies import SmoothieManager
 
 
 app = Flask(__name__)
@@ -133,13 +131,14 @@ def search_workout():
 
 
 @app.get('/smoothies')
-def view_smoothies():
+def smoothies():
+    ingredient = request.args.get('ingredient')
+    if ingredient:
+        smoothies_search_results = SmoothieManager.smoothie_search(ingredient)
+        return smoothies_search_results
+    else:
+        smoothies_search_results = None
     return render_template('smoothies.html', user=current_user)
-
-
-@app.post('/smoothies')
-def search_smoothies():
-    pass
 
 
 @app.get('/about')
