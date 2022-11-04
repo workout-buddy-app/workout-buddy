@@ -4,18 +4,20 @@
   <div class="card mx-auto bg-light text-center shadow" style="max-width: 400px;">
     <div class="card-body">
       <h1 class="mb-4">Find a Buddy!</h1>
-      <h2 class="text-center">[match name]</h2>
-      <p>[match bio information/little blurb thing]</p>
-      <img class="profileimage" src="/">
-      <form action="" method="get">
-          <button type="submit" class="button small-button">Accept Buddy</button>
-      </form>
-      <form action="" method="get">
-          <button type="submit" class="button small-button">Reject Match</button>
-      </form>
-      <form action="" method="get">
-          <button type="submit" class="button small-button">Finished Matching</button>
-      </form>
+      {% if matching_user is not none %}
+        <p class="lead mb-1">You have matched with:</p>
+        <h5>{{ matching_user.display_name }} from {{ matching_user.location }}</h5>
+      {% elif match_requested %}
+        <p class="lead">No matching users at this time</p>
+      {% endif %}
+      <div>
+        {% if matching_user is not none %}
+          <a role="button" href="/profile/{{ matching_user.user_id }}" class="btn btn-info text-white rounded-pill mt-3">View {{ matching_user.display_name }}'s profile</a>
+        {% endif %}
+        <form method="get">
+          <button type="submit" name="current_match" value="{{ matching_user.user_id }}" class="btn btn-primary text-white rounded-pill mt-2">New match</button>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}

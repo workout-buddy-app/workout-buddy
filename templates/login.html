@@ -13,7 +13,7 @@
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-dark">Login</button>
+        <button type="submit" class="btn btn-dark rounded-pill">Login</button>
         {% with error_messages = get_flashed_messages(category_filter=['error']) %}
           {% if error_messages %}
             <p class="text-danger mt-3">{{ error_messages|join(' • ') }}</p>
