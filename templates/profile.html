@@ -1,21 +1,34 @@
 {% extends 'base.html' %}
 {% block title %}Your Profile{% endblock %}
 {% block body %}
-
-        <img class="profileimage" src="/">
-        <h3 class="text-center">{{ user.email }}</h3>
-        <h1 class="text-center">Welcome, {{ user.name }}!</h1>
-        <p>Bio: {{user.about}}</p>
-            <form action="/update" method="get">
-                 <button type="submit" class="button small-button"> Update Public Profile</button>
-            </form>
-            <form action="" method="get">
-                 <button type="submit" class="button small-button"> Update Email</button>
-            </form>
-        <div class="user-control">
-            <form action="/logout" method="post">
-                <button type="submit" class="button small-button ">Logout</button>
-            </form>
+  <div class="card mx-auto bg-light text-center shadow" style="max-width: 600px;">
+    <div class="card-body">
+      <h1 class="mb-4">Welcome, {{ user_data.display_name }}!</h1>
+      <form method="post" class="text-center">
+        <div class="mb-3">
+          <label for="display_name" class="form-label">Display Name</label>
+          <input type="text" class="form-control" id="display_name" name="display_name" value="{{ user_data.display_name }}">
         </div>
-
+        <div class="mb-3">
+          <label for="about" class="form-label">About You</label>
+          <textarea class="form-control" id="about" name="about" rows="4">{{ user_data.about }}</textarea>
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" class="form-control" id="location" name="location" value="{{ user_data.location }}">
+        </div>
+        <button type="submit" class="btn btn-primary text-white rounded-pill">Update</button>
+        {% with error_messages = get_flashed_messages(category_filter=['error']) %}
+          {% if error_messages %}
+            <p class="text-primary mt-3 mb-0">{{ error_messages|join(' • ') }}</p>
+          {% endif %}
+        {% endwith %}
+        {% with info_messages = get_flashed_messages(category_filter=['info']) %}
+          {% if info_messages %}
+            <p class="text-info mt-3 mb-0">{{ info_messages|join(' • ') }}</p>
+          {% endif %}
+        {% endwith %}
+      </form>
+    </div>
+  </div>
 {% endblock %}

@@ -21,7 +21,7 @@
           <label for="date_birth" class="form-label">Date of Birth </label>
           <input type="date" class="form-control" id="date_birth" name="date_birth" required>
         </div>
-        <button type="submit" class="btn btn-dark">Sign up</button>
+        <button type="submit" class="btn btn-dark rounded-pill">Sign up</button>
         {% with error_messages = get_flashed_messages(category_filter=['error']) %}
           {% if error_messages %}
             <p class="text-danger mt-3">{{ error_messages|join(' • ') }}</p>

@@ -1,9 +1,16 @@
-from flask import Flask, flash, request, render_template, redirect
+from flask import Flask, flash, request, render_template, redirect, abort
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
+
 from config import SECRET_KEY
-from database.users import add_user, email_available, get_user_with_credentials, get_user_by_id, update_public_profile
-from utils.validation import is_over_eighteen
+
+from database.users import add_user, email_available, get_user_with_credentials, get_user_by_id, get_public_profile_data, update_public_profile
+from database.messages import get_messaged_users, get_messages_between_users, add_message
+from database.match_ups import get_match
+from database.quotes import get_random_quote
+
 from api.smoothies import SmoothieManager
+
+from utils.validation import is_over_eighteen
 
 
 app = Flask(__name__)
@@ -33,11 +40,112 @@ def user_loader(user_id):
     return user
 
 
+def render_template_with_quote(*args, **kwargs):
+    quote = get_random_quote()
+    return render_template(*args, **kwargs, quote=quote)
+
+
+@app.get('/')
+def view_home():
+    return render_template_with_quote("home.html", user=current_user)
+
+
+@app.get('/about')
+def view_about():
+    return render_template_with_quote('about.html', user=current_user)
+
+
+@app.get('/workouts')
+def view_workout():
+    return render_template_with_quote('workouts.html', user=current_user)
+
+
+@app.post('/workouts')
+def search_workout():
+    pass
+
+
+@app.get('/smoothies')
+def view_smoothies():
+    ingredient = request.args.get('ingredient')
+    if ingredient:
+        smoothies_search_results = SmoothieManager.smoothie_search(ingredient)
+        return smoothies_search_results
+    else:
+        smoothies_search_results = None
+    return render_template('smoothies.html', user=current_user)
+
+
+@app.get('/buddies')
+@login_required
+def find_a_buddy():
+    if 'current_match' in request.args:
+        match_requested = True
+        matching_user = get_match(current_user.id, exclude=request.args.get('current_match'))
+    else:
+        match_requested = False
+        matching_user = None
+    return render_template_with_quote('buddies.html', user=current_user, match_requested=match_requested, matching_user=matching_user)
+
+
+@app.get('/profile/<int:user_id>')
+@login_required
+def view_public_profile(user_id):
+    user_data = get_public_profile_data(user_id)
+    if not user_data:
+        abort(404)
+    return render_template_with_quote('publicprofile.html', user=current_user, user_data=user_data)
+
+
+@app.get('/messages')
+@login_required
+def view_messages():
+    other_users = get_messaged_users(current_user.id)
+    return render_template_with_quote('messages.html', user=current_user, other_users=other_users, selected_user_id=None)
+
+
+@app.get('/messages/<int:selected_user_id>')
+@login_required
+def view_messages_from(selected_user_id):
+    other_users = get_messaged_users(current_user.id)
+    messages = get_messages_between_users(current_user.id, selected_user_id)
+    if not messages:
+        abort(404)
+    return render_template_with_quote('messages.html', user=current_user, other_users=other_users, selected_user_id=selected_user_id, messages=messages)
+
+
+@app.post('/messages/<int:selected_user_id>')
+@login_required
+def send_message_to(selected_user_id):
+    content = request.form.get('content')
+    if content:
+        add_message(current_user.id, selected_user_id, content)
+    return redirect(f'/messages/{selected_user_id}')
+
+
+@app.get('/profile')
+@login_required
+def view_own_profile():
+    user_data = get_public_profile_data(current_user.id)
+    return render_template_with_quote("profile.html", user=current_user, user_data=user_data)
+
+
+@app.post('/profile')
+@login_required
+def edit_own_profile():
+    display_name = request.form.get('display_name')
+    about = request.form.get('about')
+    location = request.form.get('location')
+    update_public_profile(current_user.id, display_name, about, location)
+    flash('Update successful!', 'info')
+    return redirect('/profile')
+
+
 @app.get('/login')
 def view_login():
     if not current_user.is_anonymous:
         return redirect('/profile')
-    return render_template("login.html", user=current_user)
+    return render_template_with_quote("login.html", user=current_user)
 
 
 @app.post('/login')
@@ -60,7 +168,7 @@ def submit_login():
 def view_signup():
     if not current_user.is_anonymous:
         return redirect('/profile')
-    return render_template("signup.html", user=current_user)
+    return render_template_with_quote("signup.html", user=current_user)
 
 
 @app.post('/signup')
@@ -84,92 +192,16 @@ def submit_signup():
     return redirect('/signup')
 
 
-@app.post('/logout')
+@app.get('/logout')
 @login_required
 def submit_logout():
     logout_user()
     return redirect('/login')
 
 
-@app.get('/profile')
-@login_required
-def view_own_profile():
-    return render_template("profile.html", user=current_user)
-
-
-@app.get('/update')
-@login_required
-def view_update():
-    return render_template('/update.html', user=current_user)
-
-
-@app.post('/update')
-@login_required
-def update_profile():
-    user = current_user.id
-    display_name = request.form.get('display_name')
-    about = request.form.get('about')
-    location = request.form.get('location')
-    update_public_profile(display_name, about, location, user)
-    flash("Success!")
-    return redirect('/profile')
-
-
-@app.get('/')
-def view_home():
-    return render_template("home.html", user=current_user)
-
-
-@app.get('/workouts')
-def view_workout():
-    return render_template('workouts.html', user=current_user)
-
-
-@app.post('/workouts')
-def search_workout():
-    pass
-
-
-@app.get('/smoothies')
-def smoothies():
-    ingredient = request.args.get('ingredient')
-    if ingredient:
-        smoothies_search_results = SmoothieManager.smoothie_search(ingredient)
-        return smoothies_search_results
-    else:
-        smoothies_search_results = None
-    return render_template('smoothies.html', user=current_user)
-
-
-@app.get('/about')
-def about():
-    return render_template('about.html', user=current_user)
-
-
 @app.get('/disclaimer')
 def disclaimer():
-    return render_template('disclaimer.html', user=current_user)
-
-
-# ************Tried something will try to get help on this******************************
-# AttributeError: 'Request' object has no attribute 'get'
-# @app.get('/publicprofile/<int:user_id>')
-# @login_required
-# def other_user_profile(user_id):
-#     current_user_id = int(request.@should_be_signed_inget('user_id'))
-#     is_current_user = (user_id == current_user_id)
-#     user_details = get_user_by_id(user_id)
-#     return render_template('publicprofile.html')
-# *********************************************************************************
-
-@app.get('/publicprofile')
-def public_profile():
-    return render_template('publicprofile.html', user=current_user)
-
-
-@app.get('/buddies')
-def find_a_buddy():
-    return render_template('buddies.html', user=current_user)
+    return render_template_with_quote('disclaimer.html', user=current_user)
 
 
 if __name__ == '__main__':

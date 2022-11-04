@@ -1,26 +1,40 @@
 {% extends 'base.html' %}
-{% block title %}public profile{% endblock %}
+{% block title %}{{ user_data.display_name }}{% endblock %}
 {% block body %}
-
-<h1>USER NAME/DISPLAY NAME</h1>
-<img class="profileimage" src="/">
-<h2>Bio: </h2>
-<p>Extra information that a user may want to give: examples follow</p>
-    <p>hobbies<p>
-    <p>disabilities</p>
-    <p>sports ideals</p>
-
-
-<h2>Follow [user name] to connect and message! </h2>
-<form action="" method="get">
-    <button type="submit" class="button small-button">Follow [display name]</button>
-</form>
-<p></p>
-<h2>Followers:</h2>
-<p>Some sort of list of followers/frequent interactions</p>
-<h2>Communities:</h2>
-<p>Some sort of list of communities within app or external</p>
-
-
+  <div class="card mx-auto bg-light text-center shadow" style="max-width: 600px;">
+    <div class="card-body">
+      <h1 class="mb-4">{{ user_data.display_name }}</h1>
+      <div class="mb-3">
+        <label for="about" class="form-label">About:</label>
+        <textarea class="form-control" id="about" name="about" rows="4" readonly>{{ user_data.about }}</textarea>
+      </div>
+      <div class="mb-3">
+        <label for="location" class="form-label">Location:</label>
+        <input type="text" class="form-control" id="location" name="location" value="{{ user_data.location }}" readonly>
+      </div>
+      {% if user_data.user_id != user.id %}
+      <button type="button" class="btn btn-primary text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#message">
+        Send {{ user_data.display_name }} a message
+      </button>
+      {% endif %}
+    </div>
+  </div>
+  <div class="modal fade" id="message" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title">Send {{ user_data.display_name }} a message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="/messages/{{ user_data.user_id }}">
+            <div class="input-group">
+              <input type="text" class="form-control" name="content" placeholder="Your message" autocomplete="off">
+              <button type="submit" class="btn btn-primary text-white">&#9655;</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
-

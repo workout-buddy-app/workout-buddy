@@ -3,21 +3,20 @@
 {% block body %}
   <div class="card mx-auto bg-light text-center shadow" style="max-width: 600px;">
     <div class="card-body">
-      <h2 class="mb-4">Find a smoothie</h2>
+      <h1 class="mb-4">Find a smoothie</h1>
       <p>Want a quick, healthy boost? Can't be bothered to cook? Have a quick search for a delicious smoothie!</p>
-
       <form class="d-flex" role="search" method="get">
-        <input class="form-control me-2 rounded-pill" type="text" id = "ingredient" name="ingredient" placeholder="Search" aria-label="ingredient">
-        <button class="btn btn-primary rounded-pill" type="submit">Search</button>
+        <input class="form-control me-2 rounded-pill" type="text" id="ingredient" name="ingredient" placeholder="Search" aria-label="Ingredient">
+        <button class="btn btn-primary rounded-pill text-white" type="submit">Search</button>
       </form>
-        <div>
+      <div>
         {% if smoothies %}
-            {% for smoothie in smoothies %}
-              <p>
-                {{ smoothies.label }}<br>
-
-
-
+          {% for smoothie in smoothies %}
+            <p>
+              {{ smoothies.label }}<br>
+            </p>
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
   </div>

@@ -4,8 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/static/bootstrap.css">
-  <link rel="stylesheet" href="/static/style.css">
   <title>{% block title %}{% endblock %}</title>
+  <style>
+    @media (min-width: 576px) {
+      .message {
+        max-width: 75%;
+      }
+    }
+    @media (min-width: 768px) {
+      .message {
+        max-width: 50%;
+      }
+    }
+  </style>
 </head>
 <body class="bg-light text-dark h-100">
   <nav class="navbar navbar-expand-lg fixed-top flex-column align-items-stretch p-5 pb-0 bg-light">
@@ -25,6 +36,7 @@
             <li class="nav-item"><a class="nav-link link-dark" href="/login">Login</a></li>
             <li class="nav-item"><a class="nav-link link-dark" href="/signup">Sign up</a></li>
           {% else %}
+            <li class="nav-item"><a class="nav-link link-dark" href="/messages">Messages</a></li>
             <li class="nav-item"><a class="nav-link link-dark" href="/profile">Profile</a></li>
             <li class="nav-item"><a class="nav-link link-dark" href="/logout">Logout</a></li>
           {% endif %}
@@ -33,7 +45,7 @@
     </div>
     <div>
       <hr class="border-dark mb-0">
-      <p class="text-center my-2">Fitness tip #1: work out with a friend!</p>
+      <p class="text-center my-2">Motivational quote #{{ quote.id }}: {{ quote.quote }}</p>
       <hr class="border-dark mt-0">
     </div>
   </nav>
