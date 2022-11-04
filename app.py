@@ -8,6 +8,8 @@ from database.messages import get_messaged_users, get_messages_between_users, ad
 from database.match_ups import get_match
 from database.quotes import get_random_quote
 
+from api.smoothies import SmoothieManager
+
 from utils.validation import is_over_eighteen
 
 
@@ -65,12 +67,13 @@ def search_workout():
 
 @app.get('/smoothies')
 def view_smoothies():
-    return render_template_with_quote('smoothies.html', user=current_user)
-
-
-@app.post('/smoothies')
-def search_smoothies():
-    pass
+    ingredient = request.args.get('ingredient')
+    if ingredient:
+        smoothies_search_results = SmoothieManager.smoothie_search(ingredient)
+        return smoothies_search_results
+    else:
+        smoothies_search_results = None
+    return render_template('smoothies.html', user=current_user)
 
 
 @app.get('/buddies')

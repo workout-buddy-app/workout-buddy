@@ -1,44 +1,36 @@
 import json
 import requests
-import functools
+import config
 
 
 class SmoothieManager:
-    """
-    manages the call to the API
-    """
-    app_id = 'ea19623b'
-    app_key = '77db48d61cf003a1d873a3609ce6e79d'
-    smoothie_endpoint = f'https://api.edamam.com/api/recipes/v2?type=public&q=smoothie&app_id={app_id}&app_key={app_key}'
 
-
-    def __init__(self):
-        self.smoothie_data = self.get_smoothie_data()
-
-    def get_smoothie_data(self):
+    def get_smoothie_data(ingredient):
         """
         gets all data from the API endpoint
         """
-        smoothie_results = requests.get(url=self.smoothie_endpoint)
-        smoothie_data = smoothie_results.json()
-        return smoothie_data['hits']
+        api_response = requests.get(
+                f'https://api.edamam.com/api/recipes/v2?type=public'
+                f'&q={ingredient}'
+                f'&app_id={config.app_id}'
+                f'&app_key={config.app_key}'
+                f'&diet=low-fat'
+                f'&tag=smoothie')
+        return api_response.json()['hits']
 
-    def smoothie_search(self, ingredient):
+
+    def smoothie_search(ingredient):
         """This takes an ingredient as user input and searches the API
             then it will return results"""
-        ingredient = input('Enter an ingredient to search ')
-        search_results = self.smoothie_data
-        for item in search_results:
-            items = item['recipe']
-            result_values = items['label'], items['uri'], 'CAUTIONS: ', items['cautions'], 'DIETARY LABELS: ', items[
-                'dietLabels']
-            print(*result_values, sep='\n')
+        smoothie_data = SmoothieManager.get_smoothie_data(ingredient)
+        if len(smoothie_data):
+            for item in smoothie_data:
+                items = item['recipe']
+                result_values = items['label'], items['uri'], 'DIETARY LABELS: ', items[
+                    'dietLabels']
+                print(*result_values, sep='\n')
+        else:
+            print("No results found")
 
-    @functools.cache
-    def get_smoothie_search_data(self, ingredient):
-        """gets category data and checks if its seen it before
-         if not then will talk to api"""
-        smoothie_ingredient_response = self.smoothie_data
-        smoothie_search_data = smoothie_ingredient_response.json()
-        return smoothie_search_data
 
+#SmoothieManager.smoothie_search('peach')
