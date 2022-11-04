@@ -1,5 +1,6 @@
 from flask import Flask, flash, request, render_template, redirect, abort
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
+from datetime import datetime
 
 from config import SECRET_KEY
 
@@ -21,6 +22,8 @@ login_manager.init_app(app)
 login_manager.login_view = '/login'
 login_manager.login_message = 'Please log in to view this page.'
 login_manager.login_message_category = 'error'
+
+smoothie_manager = SmoothieManager()
 
 
 class User(UserMixin):
@@ -67,13 +70,12 @@ def search_workout():
 
 @app.get('/smoothies')
 def view_smoothies():
-    ingredient = request.args.get('ingredient')
+    ingredient = request.args.get('ingredient', '')
     if ingredient:
-        smoothies_search_results = SmoothieManager.smoothie_search(ingredient)
-        return smoothies_search_results
+        smoothies_search_results = smoothie_manager.smoothie_search(ingredient)
     else:
         smoothies_search_results = None
-    return render_template('smoothies.html', user=current_user)
+    return render_template_with_quote('smoothies.html', user=current_user, smoothies=smoothies_search_results, ingredient=ingredient)
 
 
 @app.get('/buddies')
@@ -178,7 +180,7 @@ def submit_signup():
     name = request.form.get('name')
     email = request.form.get('email')
     password = request.form.get('password')
-    date_birth = request.form.get('date_birth')
+    date_birth = datetime.strptime(request.form.get('date_birth'), '%Y-%m-%d')
     if len(password) < 8:
         flash("Passwords should be at least 8 characters long.", 'error')
     elif not email_available(email):
