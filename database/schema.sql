@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS messages
         CHECK (from_user_id != to_user_id)
     );
 
-CREATE TABLE inspirational_quotes
+CREATE TABLE IF NOT EXISTS inspirational_quotes
     (
 		id INTEGER NOT NULL AUTO_INCREMENT,
         quote VARCHAR(255) NOT NULL,
