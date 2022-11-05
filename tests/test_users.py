@@ -12,6 +12,7 @@ def get_mock_db_cursor(fetchone_return_value=None, fetchall_return_value=None):
         __exit__=lambda *args: None,
     )
 
+
 def get_mock_db_connection(mock_db_cursor):
     return mock.Mock(
         __enter__=lambda _: mock.Mock(
@@ -19,6 +20,7 @@ def get_mock_db_connection(mock_db_cursor):
         ),
         __exit__=lambda *args: None,
     )
+
 
 class TestUsers(TestCase):
 
@@ -89,6 +91,7 @@ class TestUsers(TestCase):
         with mock.patch('mysql.connector.connect', return_value=mock_db_connection):
             result = get_user_by_id(test_user_id)
             self.assertEqual(result, mock_user)
+
 
 if __name__ == '__main__':
     main()

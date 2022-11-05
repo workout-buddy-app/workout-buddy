@@ -1,7 +1,6 @@
 from datetime import date
 
 
-
 def is_over_eighteen(date_birth):
     """
     Checks the users age from date of birth form entry.
