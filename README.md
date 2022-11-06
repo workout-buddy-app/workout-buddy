@@ -74,7 +74,7 @@ Smoothie Page:
 
 ![image](https://user-images.githubusercontent.com/104861528/200134833-8c552d2a-312c-41b3-b42a-c24cae354c2b.png)
 
-Log-in Page:
+Log in Page:
 
 ![image](https://user-images.githubusercontent.com/104861528/200134849-f13348d9-4762-47ae-8fc5-6edbea713f0c.png)
 
