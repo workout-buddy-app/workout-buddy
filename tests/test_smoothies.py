@@ -1,10 +1,8 @@
-from unittest import TestCase, mock, main
+from unittest import TestCase, main
 from api.smoothies import SmoothieManager
 
 
 class TestRecipes(TestCase):
-
-    # def get_smoothie_data(self):
 
     def test_smoothie_search(self):
         smoothie_manager = SmoothieManager()
@@ -18,10 +16,6 @@ class TestRecipes(TestCase):
         except StopIteration:
             self.fail('Test ingredient not in any of the recipe titles')
 
-    # def test_smoothie_data_good(self):
-    #     with mock.patch("builtins.input", side_effect=["banana"]):
-    #         with self.assertEqual(items['banana']):
-    #             smoothie_search()
 
 
 if __name__ == '__main__':
