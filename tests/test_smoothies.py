@@ -4,7 +4,6 @@ from api.smoothies import SmoothieManager
 
 class TestRecipes(TestCase):
 
-
     def test_smoothie_search(self):
         smoothie_manager = SmoothieManager()
         test_ingredient = 'banana'
