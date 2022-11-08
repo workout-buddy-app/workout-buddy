@@ -12,10 +12,9 @@ class TestRecipes(TestCase):
         self.assertGreater(len(smoothie_data), 0)
         # Assert that at least one recipe contains the test ingredient in its title
         try:
-            next(filter(lambda recipe: test_ingredient in smoothie_data['ingredient'] == 'Banana', smoothie_data))
+            next(filter(lambda recipe: test_ingredient in recipe['recipe']['label'].casefold(), smoothie_data))
         except StopIteration:
             self.fail('Test ingredient not in any of the recipe titles')
-
 
 
 if __name__ == '__main__':
