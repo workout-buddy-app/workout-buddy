@@ -10,6 +10,7 @@ from database.match_ups import get_match
 from database.quotes import get_random_quote
 
 from api.smoothies import SmoothieManager
+from api.workouts import WorkoutManager
 
 from utils.validation import is_over_eighteen
 
@@ -24,6 +25,7 @@ login_manager.login_message = 'Please log in to view this page.'
 login_manager.login_message_category = 'error'
 
 smoothie_manager = SmoothieManager()
+workout_manager = WorkoutManager()
 
 
 class User(UserMixin):
@@ -60,12 +62,12 @@ def view_about():
 
 @app.get('/workouts')
 def view_workout():
-    return render_template_with_quote('workouts.html', user=current_user)
-
-
-@app.post('/workouts')
-def search_workout():
-    pass
+    search = request.args.get('search')
+    if search:
+        workouts = workout_manager.generate_random_workouts()
+    else:
+        workouts = None
+    return render_template_with_quote('workouts.html', user=current_user, workouts=workouts)
 
 
 @app.get('/smoothies')

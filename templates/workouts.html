@@ -4,10 +4,20 @@
   <div class="card mx-auto bg-light text-center shadow" style="max-width: 600px;">
     <div class="card-body">
       <h1 class="mb-4">Find a workout</h1>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-primary rounded-pill text-white" type="submit">Search</button>
+      <form class="d-flex justify-content-center" role="search" method="get">
+        <button class="btn btn-primary rounded-pill text-white" type="submit" name="search" value="true">Find me a workout</button>
       </form>
+      {% if workouts is not none %}
+        {% for workout in workouts %}
+          <div class="card mt-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ workout.name }}</h5>
+              <h6 class="card-subtitle">{{ workout.category }}</h6>
+              <p class="card-text">{{ workout.description|safe }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 {% endblock %}
